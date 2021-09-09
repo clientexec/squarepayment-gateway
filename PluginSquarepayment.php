@@ -379,9 +379,9 @@ class PluginSquarepayment extends GatewayPlugin
         $this->view->from = $params['from'];
 
         if ($params['from'] == 'signup') {
-            $fakeForm = '<a style="margin-left:0px;cursor:pointer;" class="btn-success btn btn-lg customButton center-on-mobile '.((isset($params['termsConditions']) && $params['termsConditions'])? 'disabled' : '').'" onclick="cart.submit_form('.$params['loggedIn'].');"  id="submitButton"></a>';
+            $fakeForm = '<a style="margin-left:0px;cursor:pointer;" class="app-btns primary customButton center-on-mobile" onclick="cart.submit_form('.$params['loggedIn'].');"  id="submitButton"></a>';
         } else {
-            $fakeForm = '<button style="margin-left:0px;cursor:pointer;" class="pull-right btn btn-lg btn-default" id="submitButton">'.$this->user->lang('Pay Invoice').'</button>';
+            $fakeForm = '<button class="app-btns primary" id="submitButton">'.$this->user->lang('Pay Invoice').'</button>';
         }
 
         $profile_id_values_array = $this->getBillingProfileID($this->user);
