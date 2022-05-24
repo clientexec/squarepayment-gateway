@@ -2,7 +2,7 @@
     if ($this->from == 'signup') {
         $containerClass = 'col-12';
     } else if ($this->from == 'invoice') {
-        $containerClass = 'col-12 col-md-4';
+        $containerClass = 'col-12';
     } elseif ($this->from == 'paymentmethod') {
         $containerClass = 'col-12';
     }
@@ -14,11 +14,27 @@
 
     <script type="text/javascript" src="<?php echo $this->SqPaymentFormLibrary; ?>"></script>
     <link rel="stylesheet" type="text/css" href="plugins/gateways/squarepayment/mysqpaymentform.css">
-    <div id="form-container">
-        <div id="sq-card-number"></div>
-        <div class="third" id="sq-expiration-date"></div>
-        <div class="third" id="sq-cvv"></div>
-        <div class="third" id="sq-postal-code"></div>
+    <div class="row" id="form-container">
+        <div class="col-md-12">
+            <div class="form-elem">
+                <div id="sq-card-number"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-elem">
+                <div id="sq-expiration-date"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-elem">
+                <div id="sq-cvv"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-elem">
+                <div id="sq-postal-code"></div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="text-right col-12">
@@ -94,6 +110,10 @@
                         var valid = $('.update-payment-method-frm').parsley('validate');
                         if (valid) $('.update-payment-method-frm').submit();
                     <?php } ?>
+                },
+
+                paymentFormLoaded: function() {
+                    paymentForm.setPostalCode('<?php echo $this->userZipcode;?>');
                 }
             }
         }
@@ -121,7 +141,7 @@
                         url: 'index.php?controller=signup&fuse=admin&action=testpasswordstrength',
                         async: false,
                         success : function(response) {
-                            json = ce.parseResponse(response);
+                            json = clientexec.parseResponse(response);
                             if (!json.valid) {
                                 password_validated = false;
                                 $('#password').parent().addClass('has-error');

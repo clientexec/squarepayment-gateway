@@ -116,7 +116,9 @@ class PluginSquarepayment extends GatewayPlugin
         }
 
         $totalAmount = sprintf("%01.2f", round($params['invoiceTotal'], 2));
-        $totalAmountCents = $totalAmount * 100;
+
+        //This can look absurd, but if not cast first to string, casting to int can cause a loss of cents. No idea why, but I confirmaed the issue.
+        $totalAmountCents = (int)(string)($totalAmount * 100);
 
         try {
             $user = new User($params['CustomerID']);
@@ -377,6 +379,7 @@ class PluginSquarepayment extends GatewayPlugin
         }
 
         $this->view->from = $params['from'];
+        $this->view->userZipcode = $params['userZipcode'];
 
         if ($params['from'] == 'signup') {
             $fakeForm = '<a style="margin-left:0px;cursor:pointer;" class="app-btns primary customButton center-on-mobile" onclick="cart.submit_form('.$params['loggedIn'].');"  id="submitButton"></a>';
