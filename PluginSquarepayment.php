@@ -21,6 +21,11 @@ class PluginSquarepayment extends GatewayPlugin
                 'description' => lang('Please enter your Square Payment Application ID here.'),
                 'value'       => ''
             ),
+            lang('Square Payment Location ID') => array(
+                'type'        => 'text',
+                'description' => lang('Please enter your Square Payment Location ID here.'),
+                'value'       => ''
+            ),
             lang('Square Payment Access Token') => array(
                 'type'        => 'password',
                 'description' => lang('Please enter your Square Payment Access Token here.'),
@@ -399,12 +404,13 @@ class PluginSquarepayment extends GatewayPlugin
             return $fakeForm;
         } else {
             if ($this->getVariable('Use Sandbox') == 1) {
-                $this->view->SqPaymentFormLibrary = 'https://js.squareupsandbox.com/v2/paymentform';
+                $this->view->SqPaymentWebPaymentsSDKLibrary = 'https://sandbox.web.squarecdn.com/v1/square.js';
             } else {
-                $this->view->SqPaymentFormLibrary = 'https://js.squareup.com/v2/paymentform';
+                $this->view->SqPaymentWebPaymentsSDKLibrary = 'https://web.squarecdn.com/v1/square.js';
             }
 
             $this->view->applicationid = $this->getVariable('Square Payment Application ID');
+            $this->view->locationid = $this->getVariable('Square Payment Location ID');
 
             return $this->view->render('form.phtml');
         }
